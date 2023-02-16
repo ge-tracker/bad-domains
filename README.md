@@ -1,6 +1,6 @@
 # Bad Domains
 
-[blacklist.txt](https://raw.githubusercontent.com/ge-tracker/bad-domains/main/blacklist.txt) contains a list of domains that should be blacklisted from advert display.
+[blocklist.txt](https://raw.githubusercontent.com/ge-tracker/bad-domains/main/blocklist.txt) contains a list of domains that should be denied from advert display.
 
 ## Usage
 
@@ -20,4 +20,4 @@ $ ./maintain.sh add example.com example.org
 $ ./maintain.sh remove example.com example.org
 ```
 
-The `blacklist.txt` file can also be modified directly and a workflow will automatically maintain the list for duplicates.
+The `blocklist.txt` file can also be modified directly and a workflow will automatically maintain the list for duplicates.

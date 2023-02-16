@@ -16,20 +16,28 @@ EOF
 
 add_domains() {
   echo "Adding $# domains..."
-  echo "$@" | tr ' ' '\n' >>blacklist.txt
+  echo "$@" | tr ' ' '\n' >>blocklist.txt
 }
 
 remove_domains() {
   echo "Removing $# domains..."
   for domain in "$@"; do
-    sed -i "/^${domain}$/d" blacklist.txt
+    sed -i "/^${domain}$/d" blocklist.txt
   done
 }
 
-# Converts uppercase to lowercase, sorts, and removes duplicates
+# Converts uppercase to lowercase, sorts, and removes duplicates and CRs
+# The allowlist is then applied to the blocklist
 maintain() {
-  cat blacklist.txt | tr '[:upper:]' '[:lower:]' | sort -f | uniq -i >tmp.txt
-  mv tmp.txt blacklist.txt
+  cat allowlist.txt | tr '[:upper:]' '[:lower:]' | sort -f | uniq -i >tmp.txt
+  sed -i 's/\r$//g' tmp.txt
+  mv tmp.txt allowlist.txt
+
+  cat blocklist.txt | tr '[:upper:]' '[:lower:]' | sort -f | uniq -i >tmp.txt
+  sed -i 's/\r$//g' tmp.txt
+  comm -23 tmp.txt allowlist.txt >blocklist.txt
+  rm -f tmp.txt
+
   echo "Blacklist sorted and de-duplicated!"
 }
 
